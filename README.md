@@ -1,4 +1,4 @@
-# Elemental Forge
+# LLMAlchemy
 
 A generative crafting game where players combine basic elements to discover new concepts. Every combination is computed in real-time using a local LLM (Ollama), making each playthrough unique and non-deterministic.
 
