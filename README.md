@@ -70,7 +70,3 @@ Each element contains:
 - `color`: visual representation
 - `explanation`: generated description
 - `parents`: source elements used in creation
-
----
-
-## Example
