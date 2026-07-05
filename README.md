@@ -2,6 +2,8 @@
 
 A generative crafting game where players combine basic elements to discover new concepts. Every combination is computed in real-time using a local LLM (Ollama), making each playthrough unique and non-deterministic.
 
+![Screenshot](/llmcraft.png)
+
 ---
 
 ## Gameplay
@@ -27,8 +29,11 @@ Drag two elements together to combine them. The system generates:
 ### 🔥 LLM-driven crafting
 All combinations are generated using a local model via Ollama.
 
-### 🌐 Persistent discovery graph
-Every discovered element becomes a node in a directed graph of derivations.
+### 🌐 Discovery graph
+Every discovered element becomes a node in a directed graph of derivations. 
+
+### 🔄 Persistent game session  
+The game session is persisted in the browser and can be reset at any time.
 
 ### 🧪 Concurrent reactions
 Multiple combinations can run in parallel, each resolving independently.
