@@ -11,18 +11,18 @@ export function isOverlapping(a: WorkspaceItem, b: WorkspaceItem) {
   );
 }
 
-export function invertColor(color: string): string {
-  // only works reliably for hex colors
-  if (color.startsWith("#")) {
-    const hex = color.slice(1);
+export function getReadableTextColor(bg: string): string {
+  // supports hex only for reliability
+  if (!bg.startsWith("#")) return "#111827"; // dark gray fallback
 
-    const r = 255 - parseInt(hex.substring(0, 2), 16);
-    const g = 255 - parseInt(hex.substring(2, 4), 16);
-    const b = 255 - parseInt(hex.substring(4, 6), 16);
+  const hex = bg.slice(1);
 
-    return `rgb(${r}, ${g}, ${b})`;
-  }
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
 
-  // fallback for named colors
-  return "black";
+  // luminance (perceived brightness)
+  const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+
+  return luminance > 0.6 ? "#111827" : "#ffffff";
 }

@@ -18,8 +18,16 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import type { Element, DraggableTileProps, WorkspaceItem } from "./types";
-import { isOverlapping, invertColor } from "./utils";
+import { isOverlapping, getReadableTextColor } from "./utils";
 import { layoutGraph } from "./graph";
+
+const STORAGE_KEY = "elemental-forge-state";
+
+type PersistedState = {
+  elements: Element[];
+  workspace: WorkspaceItem[];
+};
+
 
 const initialElements: Element[] = [
   { id: "fire", element: "Fire", color: "orange" },
@@ -42,7 +50,7 @@ function SidebarItem({element, onSpawn}: {element: Element; onSpawn: (e: Element
       onClick={() => onSpawn(element)}
       style={{
         backgroundColor: element.color,
-        color: "white",
+        color: getReadableTextColor(element.color),
         cursor: "pointer",
         userSelect: "none",
       }}
@@ -52,15 +60,36 @@ function SidebarItem({element, onSpawn}: {element: Element; onSpawn: (e: Element
   );
 }
 
+function loadState(): PersistedState {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) {
+    return {
+      elements: initialElements,
+      workspace: initialWorkspace,
+    };
+  }
+
+  try {
+    return JSON.parse(raw);
+  } catch {
+    return {
+      elements: initialElements,
+      workspace: initialWorkspace,
+    };
+  }
+}
+
 export default function App() {
-  const [elements, setElements] = useState<Element[]>(initialElements);
-  const [workspace, setWorkspace] = useState<WorkspaceItem[]>(initialWorkspace);
+  const [elements, setElements] = useState<Element[]>(() => loadState().elements);
+  const [workspace, setWorkspace] = useState<WorkspaceItem[]>(() => loadState().workspace);
   const [openTooltip, setOpenTooltip] = useState<string | null>(null);
   const [graphNodes, setGraphNodes] = useState<Node[]>(() => layoutGraph(initialElements).nodes);
   const [graphEdges, setGraphEdges] = useState<Edge[]>(() => layoutGraph(initialElements).edges);
   const [reactFlowInstance, setReactFlowInstance] = useState<ReactFlowInstance | null>(null);
   const [selectedGraphNodeId, setSelectedGraphNodeId] = useState<string | null>(null);
   const graphElementIdsRef = useRef(new Set(initialElements.map((element) => element.id)));
+  const [showResetModal, setShowResetModal] = useState(false);
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -69,6 +98,25 @@ export default function App() {
     }),
     useSensor(KeyboardSensor),
   );
+
+  useEffect(() => {  // Persistence
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ elements, workspace })
+    );
+  }, [elements, workspace]);
+
+  function confirmResetWorld() {
+    localStorage.removeItem(STORAGE_KEY);
+
+    setElements(initialElements);
+    setWorkspace(initialWorkspace);
+
+    setSelectedGraphNodeId(null);
+    setOpenTooltip(null);
+
+    setShowResetModal(false);
+  }
 
   useEffect(() => {
     const hasNewElement =
@@ -344,7 +392,7 @@ export default function App() {
     const explanation =
       item.explanation ??
       elements.find((element) => element.element === item.element)?.explanation;
-    const textColor = invertColor(item.color);
+    const textColor = getReadableTextColor(item.color);
     const isTooltipOpen = openTooltip === item.id && Boolean(explanation);
 
     return (
@@ -400,6 +448,7 @@ export default function App() {
 
         <div className="sidebar">
           <h2 className="sidebar-title">Discovered</h2>
+
           <div className="library-grid">
             {elements.map((element) => (
               <SidebarItem
@@ -409,7 +458,34 @@ export default function App() {
               />
             ))}
           </div>
+
+          <div className="sidebar-footer">
+            <button className="reset-button" onClick={() => setShowResetModal(true)}>
+              Reset World
+            </button>
+          </div>
         </div>
+
+        {showResetModal && (
+        <div className="modal-backdrop" onClick={() => setShowResetModal(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h3>Reset world?</h3>
+
+            <p>This will reset all your progress.</p>
+
+            <div className="modal-actions">
+              <button onClick={() => setShowResetModal(false)}>
+                Cancel
+              </button>
+
+              <button className="danger" onClick={confirmResetWorld}>
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       </DndContext>
 
       <div className="reactflow-wrapper">

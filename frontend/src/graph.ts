@@ -1,6 +1,6 @@
 import type {Element} from "./types.ts";
 import { Position, type Edge, type Node } from "reactflow";
-import { invertColor} from "./utils.tsx";
+import { getReadableTextColor } from "./utils.tsx";
 
 const GRAPH_COLUMN_GAP = 220;
 const GRAPH_ROW_GAP = 130;
@@ -134,7 +134,7 @@ export function layoutGraph(elements: Element[]) {
           targetPosition: Position.Top,
           style: {
             background: element.color,
-            color: invertColor(element.color),
+            color: getReadableTextColor(element.color),
             borderRadius: 8,
             padding: 6,
             border: "1px solid rgba(0, 0, 0, 0.2)",

@@ -89,6 +89,35 @@ body,
   user-select: none;
   cursor: pointer;
   height: fit-content;
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+.reset-button {
+  margin-top: 12px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+
+  background: #e0f2fe; /* pastel sky blue */
+  border: 1px solid #bae6fd;
+  color: #075985;
+
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.reset-button:hover {
+  background: #bae6fd;
+}
+
+.reset-button:active {
+  transform: scale(0.98);
 }
 
 .tooltip {
@@ -112,4 +141,110 @@ body,
   height: 100%;
   border-left: 1px solid #d8dbe2;
   background: #fafbfc;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+/* =========================
+   MODAL BACKDROP
+========================= */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+}
+
+/* =========================
+   MODAL CONTAINER
+========================= */
+.modal {
+  width: 360px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 18px;
+  color: #111827;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  font-family: system-ui, sans-serif;
+}
+
+/* title / text */
+.modal h3 {
+  margin: 0 0 8px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.modal p {
+  margin: 0;
+  font-size: 14px;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+/* =========================
+   ACTIONS
+========================= */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+/* =========================
+   BUTTONS (BASE)
+========================= */
+.modal button {
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+/* cancel button */
+.modal button.cancel {
+  background: #f3f4f6;
+  color: #374151;
+  border-color: #e5e7eb;
+}
+
+.modal button.cancel:hover {
+  background: #e5e7eb;
+}
+
+/* destructive button */
+.modal button.danger {
+  background: #fee2e2;
+  color: #991b1b;
+  border-color: #fecaca;
+}
+
+.modal button.danger:hover {
+  background: #fecaca;
+}
+
+/* primary action (optional if you use it) */
+.modal button.primary {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border-color: #bfdbfe;
+}
+
+.modal button.primary:hover {
+  background: #bfdbfe;
 }
