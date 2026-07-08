@@ -1,6 +1,7 @@
 export type Element = {
   id: string;
   element: string;
+  emoji: string;
   color: string;
   explanation?: string;
   parents?: string[];
@@ -9,6 +10,7 @@ export type Element = {
 export type WorkspaceItem = {
   id: string;
   element: string;
+  emoji: string;
   x: number;
   y: number;
   color: string;

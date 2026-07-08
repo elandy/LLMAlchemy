@@ -41,6 +41,7 @@ async def combine(request: CombineRequest):
         result=result.output.result,
         explanation=result.output.explanation,
         color=result.output.color,
+        emoji=result.output.emoji,
     )
     print(record.result)
     print(record.explanation)

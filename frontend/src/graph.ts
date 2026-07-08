@@ -128,7 +128,9 @@ export function layoutGraph(elements: Element[]) {
         positionsByName.set(element.element, position);
         nodes.push({
           id: element.id,
-          data: { label: element.element },
+          data: {
+            label: `${element.emoji} ${element.element}`
+          },
           position,
           sourcePosition: Position.Bottom,
           targetPosition: Position.Top,

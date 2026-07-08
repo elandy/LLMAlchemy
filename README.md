@@ -70,3 +70,19 @@ Each element contains:
 - `color`: visual representation
 - `explanation`: generated description
 - `parents`: source elements used in creation
+
+---
+
+### Planned changes
+
+## Fixes and improvements
+
+- Better error handling for the combine function
+
+## New features
+
+- Persistent game session (serverside)
+- Persistent cache for combined elements, so once someone discovers an element, everyone else gets the same result
+- Score system
+- Challenges: get a random element's name and receive massive points for discovering it
+- Leaderboards

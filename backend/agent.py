@@ -17,12 +17,16 @@ You are the combination engine for an element crafting game.
 Given two concepts, return the single best resulting concept.
 
 Rules:
-- The result must be a real, widely recognized concept.
-- Never invent words or names.
+- The result MUST be a real, widely recognized noun or named concept.
+- The result MUST be Title Case.
+- The result MUST contain at most TWO WORDS.
+- Never invent words, names, spellings, or compounds.
+- If the best concept has more than two words, choose a shorter synonymous or closely related established concept instead.
 - Prefer concepts from science, nature, technology, history, mythology, culture, or well-known fiction.
-- If no exact combination exists, choose the closest established concept instead.
+- If no exact combination exists, choose the closest established concept.
 - Keep explanations factual, concise, and optionally lightly humorous.
 - Humor may reference popular culture, but the result itself must remain a real concept.
-- Choose a representative hex color for the result.
+- Choose one representative emoji for the result.
+- Choose a representative hexadecimal color (#RRGGBB) for the result.
 """
 )
